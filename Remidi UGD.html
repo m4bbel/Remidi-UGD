@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remidi UGD</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>Tebak Angka 1-10 :  </h2>
+        <input v-model="input" placeholder="tebak gan" :disabled="isGabisa"/>
+        <br>
+        <button @click="submit" :disabled="isGabisa" >submit</button>
+        <br>
+        Kesempatan anda : {{ kesempatan }}
+       
+        <p v-show="benar"> Berhasil Menebak !</p>
+        <button @click="lagi"> Gas lagi </button>
+
+        <p v-show="loss"> Kalah gan [!]</p>
+        <button @click="lagi"> Gas lagi </button>
+
+        <p v-show="salah"> yok cobalagi yok bisa yok</p>
+        <button @click="cobalagi"> Gas lagi </button>
+
+        {{randomizer}}
+       
+
+        
+        <div class="footer">
+            <p> {{saya.nama}} | {{saya.NPM}} | {{saya.kelas}}</p>
+        </div>
+
+    </div>
+    
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            input :"",
+            random:3,
+            kesempatan:3,
+            isGabisa:false,
+            benar:"",
+            loss:"",
+            salah:"",
+            randomizer: Math.floor(Math.random() * 10)+1,
+
+            saya: {
+             nama: "Alvin Bima",
+             NPM : 180709854,
+             kelas: "B",         
+            },
+        },
+        methods: {
+            submit(){
+               if(this.input == this.randomizer){
+                   this.benar = true;
+               }else{
+                this.isGabisa = true;
+                this.salah =true;
+                this.kesempatan--;
+                if(this.kesempatan==0){
+                    this.loss= true;
+                    this.salah= "";
+                }
+               }
+            },
+            lagi(){
+               location.reload();
+            },
+            cobalagi(){
+                this.isGabisa = false;
+                this.salah = "";
+           }
+        },
+    });
+</script>
+<style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        color: rgb(83, 78, 78);
+        text-align: center;
+    }
+</style>
+</html>
